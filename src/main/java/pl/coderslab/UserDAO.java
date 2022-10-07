@@ -71,6 +71,19 @@ public class UserDAO {
         return null;
     }
 
+    public void Delete(int id)
+    {
+        try(Connection conn = DbUtil.getConnection())
+        {
+            PreparedStatement statement = conn.prepareStatement(DELETE_USER_QUERY);
+            statement.setInt(1,id);
+            statement.executeUpdate();
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void Update(User user)
     {
         try(Connection conn = DbUtil.getConnection())
@@ -87,6 +100,8 @@ public class UserDAO {
             System.out.println(e.getMessage());
         }
     }
+
+
 
     public User[] finalAll()
     {
