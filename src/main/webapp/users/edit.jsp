@@ -76,7 +76,7 @@
               <input type="hidden" name="id" value="${user.id}"/>
               <div class="form-group">
                 <label for="UserName">Nazwa</label>
-                <input value="${user.userName}" name="UserName" type="text" class="form-control" id="UserName" placeholder="Nazwa użytkownika">
+                <input value="${user.username}" name="UserName" type="text" class="form-control" id="UserName" placeholder="Nazwa użytkownika">
               </div>
               <div class="form-group">
                 <label for="UserEmail">Email</label>
