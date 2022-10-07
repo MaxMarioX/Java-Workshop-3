@@ -3,6 +3,7 @@ package pl.coderslab;
 import org.mindrot.jbcrypt.BCrypt;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class UserDAO {
@@ -16,6 +17,13 @@ public class UserDAO {
     public String hashPassword(String password)
     {
         return BCrypt.hashpw(password,BCrypt.gensalt());
+    }
+
+    private User[] addToArray(User user, User[] users)
+    {
+        User[] temp = Arrays.copyOf(users, users.length + 1);
+        temp[users.length] = user;
+        return temp;
     }
 
     public User Create(User user)
@@ -80,11 +88,11 @@ public class UserDAO {
         }
     }
 
-    public List<User> finalAll()
+    public User[] finalAll()
     {
         try(Connection conn = DbUtil.getConnection())
         {
-            List<User> users = new ArrayList<User>();
+            User[] users = new User[0];
 
             PreparedStatement statement = conn.prepareStatement(FIND_ALL_USERS_QUERY);
             ResultSet resultSet = statement.executeQuery();
@@ -95,7 +103,7 @@ public class UserDAO {
                 user.setUserName(resultSet.getString("username"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
-                users.add(user);
+                users = addToArray(user, users);
             }
             return users;
 
